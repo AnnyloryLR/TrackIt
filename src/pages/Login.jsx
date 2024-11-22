@@ -4,23 +4,20 @@ import styled from "styled-components"
 
 
 function Login(){
-    return(
 
+    return(
         <LoginStyle>
              <img src={logo}></img>
              <FormStyle>
-                <InputStyle type="text" />
-                <InputStyle type="text" />
-                <InputStyleSubmit type="submit" />
-
-
+                <InputStyle type="text" placeholder="email" />
+                <InputStyle type="text" placeholder="senha"/>
+                <InputStyleSubmit type="submit" value="Entrar"/>
+                <Foward>
+                    <p>Não tem uma conta? Cadastre-se!</p>
+                </Foward>
              </FormStyle>
 
-        </LoginStyle>
-
-    
-       
-    )
+        </LoginStyle>)
 }
 
 export default Login
@@ -56,10 +53,19 @@ const FormStyle = styled.form`
 const InputStyle = styled.input`
     width:300px;
     height:45px;
+    display:flex;
     border:1px solid #D4D4D4;
     background-color:#FFFFFF;
     border-radius:5px;
-    margin:10px;
+    margin:5px;
+    text-indent:10px;
+    &::placeholder{
+        color:#DBDBDB;
+        font-family:"Lexend Deca";
+        font-size:20px;
+        font-weight:400;        
+    }
+
 
     
 `
@@ -67,7 +73,19 @@ const InputStyleSubmit = styled.input`
     width:300px;
     height:45px;
     border:none;
+    background-color:#52B6FF;
     border-radius:5px;
-    margin:10px;
-    
+    margin:5px;
+    color:#FFFFFF;
+    font-family:"Lexend Deca";
+    font-size:20px;
+    font-weight:400; 
+`
+
+const Foward = styled.div`
+    color:#52B6FF;
+    font-weight:400;
+    font-size:15px;
+    font-family:"Lexend Deca";
+    text-decoration:underline;
 `
