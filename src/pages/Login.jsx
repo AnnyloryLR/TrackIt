@@ -39,15 +39,18 @@ const LoginStyle = styled.div`
     img{
         width:180px;
         height:180px;
+        position:fixed;
+        top:70px;
+        bottom:100px;
     }
 `
 
 const FormStyle = styled.form`
     width:100%;
-    height:40%;
     display:flex;
     flex-direction:column;
     align-items:center;
+    margin-top:100px;
 `
 
 const InputStyle = styled.input`

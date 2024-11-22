@@ -5,27 +5,29 @@ import styled from "styled-components"
 function SignUp(){
 
     return(
-        <LoginStyle>
+        <SignUpStyle>
         <img src={logo}></img>
         <FormStyle>
            <InputStyle type="text" placeholder="email" />
            <InputStyle type="text" placeholder="senha"/>
-           <InputStyleSubmit type="submit" value="Entrar"/>
+           <InputStyle type="text" placeholder="nome" />
+           <InputStyle type="text" placeholder="foto"/>
+           <InputStyleSubmit type="submit" value="Cadastrar"/>
            <Foward>
-               <p>Não tem uma conta? Cadastre-se!</p>
+               <p>Já tem uma conta? Faça login!</p>
            </Foward>
 
 
         </FormStyle>
 
-   </LoginStyle>)
+   </SignUpStyle>)
 }
 
 export default SignUp
 
 
 
-const LoginStyle = styled.div`
+const SignUpStyle = styled.div`
     width:100vw;
     height:100vh;
     display:flex;
@@ -45,7 +47,6 @@ const LoginStyle = styled.div`
 
 const FormStyle = styled.form`
     width:100%;
-    height:40%;
     display:flex;
     flex-direction:column;
     align-items:center;
