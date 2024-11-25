@@ -299,7 +299,9 @@ const ListItem = styled.li`
     div{
         margin-left:15px;
     }
-    `
+
+    /* display:none; */
+`
 
 const Text = styled.div`
     width:90%;
