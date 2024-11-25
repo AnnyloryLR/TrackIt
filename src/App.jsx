@@ -9,9 +9,9 @@ function App() {
 
   return (
     <AppStyle>
-    {/*  <Login /> */}
-       <SignUp />
-      {/* <Habits /> */}
+     {/* <Login /> */}
+      {/* <SignUp /> */}
+       <Habits /> 
       {/* <Today /> */}
       
     </AppStyle>
