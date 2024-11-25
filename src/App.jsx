@@ -11,8 +11,8 @@ function App() {
     <AppStyle>
      {/* <Login /> */}
       {/* <SignUp /> */}
-       <Habits /> 
-      {/* <Today /> */}
+       {/* <Habits />  */}
+      <Today />
       
     </AppStyle>
   )

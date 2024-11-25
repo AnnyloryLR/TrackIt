@@ -1,11 +1,6 @@
-import logo from "../images/logo.png"
 import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
-import { Description } from "@mui/icons-material";
-
-
-
 
 
 
@@ -200,7 +195,7 @@ const ButtonLeft = styled.div`
     align-items:center;
     background-color:#52B6FF;
     color:#FFFFFF;
-    font-family:Lexend Deca;
+    font-family:"Lexend Deca";
     font-size:18px;
     font-weight:400;
     text-align:center;
