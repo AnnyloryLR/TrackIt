@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import { Link } from "react-router";
 
 
 
@@ -72,7 +73,7 @@ function Habits(){
                 <ButtonLeft>
                     <CalendarMonthIcon /> Hábitos
                 </ButtonLeft>
-                <ButtonRight>
+                <ButtonRight to={"/hoje"}>
                     <EventAvailableIcon /> Hoje
                 </ButtonRight>
 
@@ -201,7 +202,8 @@ const ButtonLeft = styled.div`
     text-align:center;
 `
 
-const ButtonRight = styled.div`
+const ButtonRight = styled(Link)`
+    width:50%;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -211,6 +213,7 @@ const ButtonRight = styled.div`
     font-size:20px;
     font-weight:400;
     text-align:center;
+    text-decoration:none;
 `
 
 const ListItemInsert = styled.li`

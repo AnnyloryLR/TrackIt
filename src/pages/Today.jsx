@@ -2,6 +2,7 @@ import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import {CheckBox}  from "@mui/icons-material";
+import { Link } from "react-router";
 
 
 function Today(){
@@ -80,7 +81,7 @@ function Today(){
             </Form>
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
             <BottomBar>
-                <ButtonLeft>
+                <ButtonLeft to={"/habitos"}>
                     <CalendarMonthIcon /> Hábitos
                 </ButtonLeft>
                 <ButtonRight>
@@ -186,7 +187,8 @@ const BottomBar = styled.div`
 
 `
 
-const ButtonLeft = styled.div`
+const ButtonLeft = styled(Link)`
+    width:50%;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -196,6 +198,7 @@ const ButtonLeft = styled.div`
     font-size:18px;
     font-weight:400;
     text-align:center;
+    text-decoration:none;
 `
 
 const ButtonRight = styled.div`

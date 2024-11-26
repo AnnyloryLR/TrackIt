@@ -1,3 +1,4 @@
+import { Link } from "react-router"
 import logo from "../images/logo.png"
 import styled from "styled-components"
 
@@ -13,7 +14,7 @@ function SignUp(){
            <InputStyle type="text" placeholder="nome" />
            <InputStyle type="text" placeholder="foto"/>
            <InputStyleSubmit type="submit" value="Cadastrar"/>
-           <Foward>
+           <Foward to={"/"}>
                <p>Já tem uma conta? Faça login!</p>
            </Foward>
 
@@ -86,7 +87,7 @@ const InputStyleSubmit = styled.input`
     font-weight:400; 
 `
 
-const Foward = styled.div`
+const Foward = styled(Link)`
     color:#52B6FF;
     font-weight:400;
     font-size:15px;

@@ -3,18 +3,24 @@ import Habits from "./pages/Habits"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import Today from "./pages/Today"
+import { BrowserRouter, Routes, Route} from "react-router"
+
 
 
 function App() {
 
   return (
-    <AppStyle>
-      {/* <Login /> */}
-      {/* <SignUp /> */}
-      {/* <Habits />  */}
-      {/* <Today /> */}
-      
-    </AppStyle>
+    <BrowserRouter>
+      <AppStyle>
+        <Routes>
+          <Route path="/" element={<Login />} />     
+          <Route path="/cadastro" element={<SignUp />} />
+          <Route path="/habitos" element={<Habits /> } />
+          <Route path="/hoje" element={<Today />} />
+        </Routes>
+        
+      </AppStyle>
+    </BrowserRouter>
   )
 }
 
