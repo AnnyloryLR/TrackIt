@@ -15,7 +15,9 @@ function SignUp(){
     const navigate = useNavigate();
     
     function register(event){
+
         event.preventDefault()
+        
         const userData ={email, name, image, password}
        
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", userData)
@@ -97,10 +99,7 @@ const InputStyle = styled.input`
         font-size: 20px;
         font-weight: 400;
         text-align: left;
-    }
-
-
-    
+    }    
 `
 const InputStyleSubmit = styled.input`
     width:300px;

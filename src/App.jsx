@@ -4,23 +4,28 @@ import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import Today from "./pages/Today"
 import { BrowserRouter, Routes, Route} from "react-router"
+import UserContext from "../contexts/UserContext"
+import { useState } from "react"
 
 
 
 function App() {
+  const [token, setToken] = useState("");
 
   return (
-    <BrowserRouter>
-      <AppStyle>
-        <Routes>
-          <Route path="/" element={<Login />} />     
-          <Route path="/cadastro" element={<SignUp />} />
-          <Route path="/habitos" element={<Habits /> } />
-          <Route path="/hoje" element={<Today />} />
-        </Routes>
-        
-      </AppStyle>
-    </BrowserRouter>
+    <UserContext.provider value={{token, setToken}}>
+      <BrowserRouter>
+        <AppStyle>
+          <Routes>
+            <Route path="/" element={<Login />} />     
+            <Route path="/cadastro" element={<SignUp />} />
+            <Route path="/habitos" element={<Habits /> } />
+            <Route path="/hoje" element={<Today />} />
+          </Routes>
+          
+        </AppStyle>
+      </BrowserRouter>
+    </UserContext.provider>
   )
 }
 

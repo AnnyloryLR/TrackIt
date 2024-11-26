@@ -1,17 +1,42 @@
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import logo from "../images/logo.png"
 import styled from "styled-components"
+import { useState } from "react"
+import axios from "axios"
+import { useContext } from "react"
+import { UserContext } from "../contexts/UserContext"
 
 
 
 function Login(){
+    const { token, setToken} = useContext(UserContext);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate()
+
+    function accountAccess(event){
+
+        event.preventDefault()
+
+        const accessInformation = {email, password}
+
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", accessInformation)
+        .then(res => {
+            setToken(res.data.token)
+            navigate("/habitos")
+        })
+
+        .catch(err => console.log(err))
+    }
 
     return(
         <LoginStyle>
              <img src={logo}></img>
-             <FormStyle>
-                <InputStyle type="text" placeholder="email" />
-                <InputStyle type="text" placeholder="senha"/>
+             <FormStyle onSubmit={accountAccess}>
+
+                <InputStyle onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder="email" />
+                <InputStyle onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="senha"/>
                 <InputStyleSubmit type="submit" value="Entrar"/>
                 <Foward to={"/cadastro"}>
                     <p>Não tem uma conta? Cadastre-se!</p>
@@ -70,9 +95,13 @@ const InputStyle = styled.input`
         font-size:20px;
         font-weight:400;        
     }
-
-
-    
+    &[type='text']{
+        color:#666666;
+        font-family: "Lexend Deca";
+        font-size: 20px;
+        font-weight: 400;
+        text-align: left;
+    }   
 `
 const InputStyleSubmit = styled.input`
     width:300px;
