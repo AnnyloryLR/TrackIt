@@ -12,18 +12,26 @@ function SignUp(){
     const [password, setPassword] = useState("")
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    
+       
     function register(event){
+        setLoading(true);
 
         event.preventDefault()
         
         const userData ={email, name, image, password}
        
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", userData)
-        .then(res => navigate("/"))
-        .catch(err => console.log(err))
+        .then(res => {
+            navigate("/")
+            setLoading(false)
+        })
+        .catch(err => {
+            alert(err.response.data.message)
+            setLoading(false)
+        })
 
     } 
 
@@ -33,11 +41,13 @@ function SignUp(){
         <SignUpStyle>
         <img src={logo}></img>
         <FormStyle onSubmit={register}>
-           <InputStyle onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder="email" required />
-           <InputStyle onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="senha" required />
-           <InputStyle onChange={e => setName(e.target.value)} value={name} type="text" placeholder="nome" required />
-           <InputStyle onChange={e => setImage(e.target.value)} value={image} type="text" placeholder="foto"/>
-           <InputStyleSubmit type="submit" value="Cadastrar"/>
+           <InputStyle disabled={loading ? "disabled":""} onChange={e => setEmail(e.target.value)} value={email} type="email" placeholder="email" required />
+           <InputStyle disabled={loading ? "disabled":""} onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="senha" required />
+           <InputStyle disabled={loading ? "disabled":""} onChange={e => setName(e.target.value)} value={name} type="text" placeholder="nome" required />
+           <InputStyle disabled={loading ? "disabled":""} onChange={e => setImage(e.target.value)} value={image} type="text" placeholder="foto"/>
+           <StyleSubmit disabled={loading ? "disabled":""} type="submit" >
+            {!loading ? "Cadastrar" : <ThreeDots color="#FFFFFF"/>}
+           </StyleSubmit>
            <Foward to={"/"}>
                <p>Já tem uma conta? Faça login!</p>
            </Foward>
@@ -100,11 +110,22 @@ const InputStyle = styled.input`
         font-size: 20px;
         font-weight: 400;
         text-align: left;
+    }
+    &[type='email']{
+        color:#666666;
+        font-family: "Lexend Deca";
+        font-size: 20px;
+        font-weight: 400;
+        text-align: left;
     }    
+      
 `
-const InputStyleSubmit = styled.input`
+const StyleSubmit = styled.button`
     width:300px;
     height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     border:none;
     background-color:#52B6FF;
     border-radius:5px;
