@@ -4,7 +4,8 @@ import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import Today from "./pages/Today"
 import { BrowserRouter, Routes, Route} from "react-router"
-import UserContext from "../contexts/UserContext"
+import React from "react"
+import UserContext from "./contexts/UserContext"
 import { useState } from "react"
 
 
@@ -13,7 +14,7 @@ function App() {
   const [token, setToken] = useState("");
 
   return (
-    <UserContext.provider value={{token, setToken}}>
+    <UserContext.Provider value={{token, setToken}}>
       <BrowserRouter>
         <AppStyle>
           <Routes>
@@ -25,7 +26,7 @@ function App() {
           
         </AppStyle>
       </BrowserRouter>
-    </UserContext.provider>
+    </UserContext.Provider>
   )
 }
 

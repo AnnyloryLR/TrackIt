@@ -3,8 +3,8 @@ import logo from "../images/logo.png"
 import styled from "styled-components"
 import { useState } from "react"
 import axios from "axios"
-import { useContext } from "react"
-import { UserContext } from "../contexts/UserContext"
+import React, { useContext } from "react"
+import UserContext from "../contexts/UserContext"
 
 
 
@@ -24,7 +24,7 @@ function Login(){
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", accessInformation)
         .then(res => {
             setToken(res.data.token)
-            navigate("/habitos")
+            navigate("/hoje")
         })
 
         .catch(err => console.log(err))
