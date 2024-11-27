@@ -5,28 +5,36 @@ import { useState } from "react"
 import axios from "axios"
 import React, { useContext } from "react"
 import UserContext from "../contexts/UserContext"
+import { ThreeDots } from "react-loader-spinner"
 
 
 function Login(){
+
     const { token, setToken} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false);
 
     function accountAccess(event){
 
-        event.preventDefault()
+        setLoading(false);
+        event.preventDefault();
 
-        const accessInformation = {email, password}
+        const accessInformation = {email, password};
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", accessInformation)
         .then(res => {
             setToken(res.data.token)
+            setLoading(false)
             navigate("/hoje")
         })
 
-        .catch(err => console.log(err))
+        .catch(err => {
+            alert(err.response.data.message)
+            setLoading(false)
+        })
     }
 
     return(
@@ -34,9 +42,11 @@ function Login(){
              <img src={logo}></img>
              <FormStyle onSubmit={accountAccess}>
 
-                <InputStyle onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder="email" />
-                <InputStyle onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="senha"/>
-                <InputStyleSubmit type="submit" value="Entrar"/>
+                <InputStyle disabled={loading ? "disabled":""} onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder="email" />
+                <InputStyle disabled={loading ? "disabled":""} onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="senha"/>
+                <StyleSubmit disabled={loading ? "disabled":""} type="submit" >
+                   {!loading ? "Entrar": <ThreeDots color="#FFFFFF" />}
+                </StyleSubmit>
                 <Foward to={"/cadastro"}>
                     <p>Não tem uma conta? Cadastre-se!</p>
                 </Foward>
@@ -102,9 +112,12 @@ const InputStyle = styled.input`
         text-align: left;
     }   
 `
-const InputStyleSubmit = styled.input`
+const StyleSubmit = styled.button`
     width:300px;
     height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
     border:none;
     background-color:#52B6FF;
     border-radius:5px;
@@ -114,7 +127,6 @@ const InputStyleSubmit = styled.input`
     font-size:20px;
     font-weight:400; 
 `
-
 const Foward = styled(Link)`
     color:#52B6FF;
     font-weight:400;

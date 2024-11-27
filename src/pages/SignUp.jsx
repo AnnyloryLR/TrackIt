@@ -17,8 +17,8 @@ function SignUp(){
     const navigate = useNavigate();
        
     function register(event){
-        setLoading(true);
 
+        setLoading(true);
         event.preventDefault()
         
         const userData ={email, name, image, password}
