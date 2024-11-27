@@ -45,7 +45,7 @@ function SignUp(){
            <InputStyle disabled={loading ? "disabled":""} onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="senha" required />
            <InputStyle disabled={loading ? "disabled":""} onChange={e => setName(e.target.value)} value={name} type="text" placeholder="nome" required />
            <InputStyle disabled={loading ? "disabled":""} onChange={e => setImage(e.target.value)} value={image} type="text" placeholder="foto"/>
-           <StyleSubmit disabled={loading ? "disabled":""} type="submit" >
+           <StyleSubmit style={loading? {opacity:0.7}:{opacity:1}} disabled={loading ? "disabled":""} type="submit" >
             {!loading ? "Cadastrar" : <ThreeDots color="#FFFFFF"/>}
            </StyleSubmit>
            <Foward to={"/"}>

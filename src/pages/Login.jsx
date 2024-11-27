@@ -7,10 +7,9 @@ import React, { useContext } from "react"
 import UserContext from "../contexts/UserContext"
 import { ThreeDots } from "react-loader-spinner"
 
-
 function Login(){
 
-    const { token, setToken} = useContext(UserContext);
+    const { user, setUser} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,14 +18,15 @@ function Login(){
 
     function accountAccess(event){
 
-        setLoading(false);
+        setLoading(true);
         event.preventDefault();
 
         const accessInformation = {email, password};
 
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", accessInformation)
         .then(res => {
-            setToken(res.data.token)
+            setUser(res.data)
+            localStorage.setItem("token", res.data.token)
             setLoading(false)
             navigate("/hoje")
         })
@@ -44,7 +44,7 @@ function Login(){
 
                 <InputStyle disabled={loading ? "disabled":""} onChange={e => setEmail(e.target.value)} value={email} type="text" placeholder="email" />
                 <InputStyle disabled={loading ? "disabled":""} onChange={e => setPassword(e.target.value)} value={password} type="password" placeholder="senha"/>
-                <StyleSubmit disabled={loading ? "disabled":""} type="submit" >
+                <StyleSubmit style={loading? {opacity:0.7}:{opacity:1}} disabled={loading ? "disabled":""} type="submit" >
                    {!loading ? "Entrar": <ThreeDots color="#FFFFFF" />}
                 </StyleSubmit>
                 <Foward to={"/cadastro"}>
@@ -120,6 +120,7 @@ const StyleSubmit = styled.button`
     justify-content:center;
     border:none;
     background-color:#52B6FF;
+    /* opacity:0.7; */
     border-radius:5px;
     margin:5px;
     color:#FFFFFF;

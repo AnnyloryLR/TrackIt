@@ -11,10 +11,10 @@ import { useState } from "react"
 
 
 function App() {
-  const [token, setToken] = useState("");
+  const [user, setUser] = useState("");
 
   return (
-    <UserContext.Provider value={{token, setToken}}>
+    <UserContext.Provider value={{user, setUser}}>
       <BrowserRouter>
         <AppStyle>
           <Routes>
