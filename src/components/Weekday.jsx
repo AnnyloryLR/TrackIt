@@ -2,15 +2,22 @@ import styled from "styled-components"
 import {useState} from "react"
 
 
-function Weekday({day}){
+function Weekday({day, id, days, setDays}){
 
     const [selected, setSelected] = useState(false)
 
     function selectDays(){
         if( selected === false){
-            setSelected(true)
+            let day = id
+            let chosenDays = [...days, day ]
+            setDays(chosenDays)
+            setSelected(true)            
             
-        } else{
+        } else {
+            let day = id
+            let chosenDays = [...days, day]
+            const finalDays = chosenDays.filter( chosenday => chosenday !== day)
+            setDays(finalDays)
             setSelected(false)
         }
             
@@ -18,13 +25,8 @@ function Weekday({day}){
 
 
     return(
-    
-
+   
         <Daybutton onClick={selectDays} selected={selected} >{day}</Daybutton>
-
-
-
-
     )
 }
 

@@ -1,34 +1,58 @@
 import styled from "styled-components"
-import { useState } from "react"
+import React, { useContext, useState } from "react"
+import UserContext from "../contexts/UserContext"
 import Weekday from "../components/Weekday"
+import axios from "axios"
 
 function Habit(){
 
-    const weekdays =["D", "S", "T", "Q", "Q", "S"]
+    const {user} = useContext(UserContext)
 
-    const [selected, setSelected] = useState(false)
+    let token = user.token
 
-    function selectDays(){
-        if( selected === false){
-            setSelected(true)
-            
-        } else{
-            setSelected(false)
+    const weekdays =["D", "S", "T", "Q", "Q", "S","S"]
+
+    const [days, setDays] = useState([])
+
+    const [name, setName] = useState("")
+
+    const habit = {name, days} 
+
+    function logHabit(){
+        const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+        
+        const header = {
+            headers:{
+                Authorization:`Bearer ${token}`
+            }
         }
-            
-        }
 
+        axios.post(url,habit,header)
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err.response.data))
 
+    }
 
 
     return(
         <>
             <ListItemInsert >    
-                <input type="text" placeholder="nome do hábito" />
+                <input type="text"
+                       placeholder="nome do hábito"
+                       value={name}
+                       onChange={e => setName(e.target.value)}
+                 />
                 <div>
-                    { weekdays.map((day, i) => <Weekday key={i} day={day} />)}
+                    { weekdays.map((day, i) => <Weekday 
+                        key={i} 
+                        id={i} 
+                        day={day}
+                        days={days}
+                        setDays={setDays}
+
+                     />)}
                 </div>
-                <span><Cancel>Cancelar</Cancel> <Save>Salvar</Save></span>
+                <span><Cancel>Cancelar</Cancel> <Save onClick={logHabit}>Salvar</Save></span>
             </ListItemInsert>
 
         
