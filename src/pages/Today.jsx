@@ -1,14 +1,40 @@
 import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
-import {CheckBox}  from "@mui/icons-material"
 import { Link } from "react-router"
-import React, {useContext} from "react"
+import React, {useContext, useEffect, useState} from "react"
 import UserContext from "../contexts/UserContext"
+import axios from "axios"
+import Activity from "../components/Activity"
+
 
 
 function Today(){
+
     const {user} = useContext(UserContext); 
+
+    const [todayHabits, setToday] = useState([])
+
+    function requisition(){
+        const url="https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today"
+
+        const header = {
+            headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        }
+
+        axios.get(url, header)
+        .then(res => {setToday(res.data)})
+
+        .catch(err => alert(err.response.data.message))
+
+    }
+
+    useEffect(() => {
+        requisition()
+    }, [])
+
 
     return(
         <HabitsStyle>
@@ -25,64 +51,18 @@ function Today(){
                  <h1>Segunda, 17/05</h1>
             </Title>
             
-            <Form>
-                <List>
-                        <ListItem>
-                            <div>
-                                <Text>
-                                    Ler 1 capítulo de livro
-                                    
-                                </Text>
-                                <Subtext>
-                                    Sequência atual: 3 dias
-                                </Subtext>
-                                <Subtext>
-                                    Seu recorde: 5 dias  
-                                </Subtext>
-                                         
-                            </div>
-                            <StyleBox><CheckBox sx={{fontSize:88}}  /></StyleBox>
-                    
-                        </ListItem>
-
-                        <ListItem>
-                            <div>
-                                <Text>
-                                    Fazer Exercícios
-                                    
-                                </Text>
-                                <Subtext>
-                                    Sequência atual: 3 dias
-                                </Subtext>
-                                <Subtext>
-                                    Seu recorde: 3 dias                                    
-                                </Subtext>    
-                            </div>
-                            <StyleBox><CheckBox sx={{fontSize:88}}  /></StyleBox>
-                           
-                           
-                        </ListItem>
-
-                        <ListItem>
-                            <div>
-                                <Text>
-                                    Estudar JS
-                                    
-                                </Text> 
-                                <Subtext>
-                                    Sequência atual: 1 dias
-                                </Subtext>
-                                <Subtext>
-                                    Seu recorde: 5 dias                        
-                                </Subtext>  
-                            </div>
-                                
-                            <StyleBox><CheckBox sx={{fontSize:88}}  /></StyleBox>
-                            
-                        </ListItem>                  
+            
+            <List>
+               {todayHabits.map(today => <Activity
+                                            text={today.name}
+                                            done={today.done}
+                                            current={today.currentSequence}
+                                            sequence={today.highestSequence}
+                                            key={today.id}
+                                              />) }   
                 
-                </List>
-            </Form>
+            </List>
+          
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
             <BottomBar>
                 <ButtonLeft to={"/habitos"}>
@@ -159,20 +139,14 @@ const Title = styled.div`
 `
 
 
-const Form = styled.form`
-    width:100%;
-    display:flex;
-    justify-content:center;
-    margin-bottom:20px;
-        
-`
 
 const List = styled.div`
     width:90%;
     display:flex;
     flex-wrap:wrap;
     align-items:center;
-    list-style:none;   
+    list-style:none;
+    
 `
 const BottomBar = styled.div`
     width:100%;
@@ -215,39 +189,4 @@ const ButtonRight = styled.div`
     font-size:20px;
     font-weight:400;
     text-align:center;
-`
-
-const ListItem = styled.li`
-    width:100%;
-    min-height:100px;
-    display:flex;
-    align-items:center;
-    background-color:#FFFFFF;
-    border-radius:5px;
-    margin-bottom:10px;
-    div{
-        min-width:70%;
-        margin-left:7px;
-    }
-`
-
-const Text = styled.div`
-    color:#666666;
-    font-family: "Lexend Deca";
-    font-size: 20px;
-    font-weight: 400;
-    margin:5px;
-    
-`
-
-const Subtext = styled.div`
-        color:#666666;  
-        font-family: "Lexend Deca";
-        font-size: 13px;
-        font-weight: 400;
-     
-`
-const StyleBox = styled.div`
-        color:#EBEBEB;/*#8FC549; */
-   
 `

@@ -9,7 +9,7 @@ import { ThreeDots } from "react-loader-spinner"
 
 function Login(){
 
-    const { user, setUser} = useContext(UserContext);
+    const {setUser} = useContext(UserContext);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

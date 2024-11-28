@@ -2,16 +2,81 @@ import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
 import { Link } from "react-router"
-import React, {useContext, useState} from "react"
+import { ThreeDots } from "react-loader-spinner"
+import React, {useContext, useEffect, useState} from "react"
 import UserContext from "../contexts/UserContext"
 import Habit from "../components/Habit"
+import axios from "axios"
+import Weekday from "../components/Weekday"
+
 
 function Habits(){
+
+    const [habits, setHabits] = useState([]) 
     
     const {user} = useContext(UserContext);
-    
+
+    const [showInsert, setInsert] = useState("none")
+
+    const [showText, setText] = useState("none")
+
+    const weekdays =["D", "S", "T", "Q", "Q", "S","S"]
+
+    const [chosenDays, setDays] = useState([])
+
+    const [habitName, setName] = useState("")
+
+    const habit = {name:habitName, days:chosenDays} 
+
+    const [loading, setLoading] = useState(false);
+
+    function logHabit(){
+        const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+        
+        const header = {
+            headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        }
+
+        axios.post(url,habit,header)
+        .then(res => {console.log(res.data)
+                      setInsert("none")
+                      setText("none")
+        })
+
+        .catch(err => alert(err.response.data.message))
+
+    }
+
+
+
+    function requisition(){
+         const url="https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
+
+         const header = {
+             headers:{
+                 Authorization:`Bearer ${user.token}`
+             }
+         }
+
+         axios.get(url, header)
+         .then(res => {setHabits(res.data)
+                     setText("none")
+         })
+
+         .catch(err => alert(err.response.data.message))
+
+     }
+
+     useEffect(() => {
+         requisition()
+     }, [])
+
+
+
     return(
-        <HabitsStyle>
+        <HabitsStyle showtext={showText} >
             <Top>
                 <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M23.5841 4.55826L18.0877 4.32437C17.8278 4.32437 16.9702 5.88365 15.5149 9.00222C14.0595 
@@ -22,17 +87,58 @@ function Habits(){
                 <img src={user.image} />
             </Top>
             <Title>
-                 <h1>Meus hábitos</h1> <button>+</button>
+                 <h1>Meus hábitos</h1> <button onClick={()=> setInsert("enabled")} >+</button>
             </Title>
-            
-            <Form onSubmit={e => e.preventDefault()}>
-                <List>
-                    <Habit />
+            <ListItemInsert onSubmit={e => e.preventDefault()}  weekdays={weekdays} showinsert={showInsert} >    
+                <input type="text"
+                       placeholder="nome do hábito" 
+                       value={habitName}
+                       onChange={e => setName(e.target.value)}
+                       disabled={loading ? "disabled":""}
+                 />
+                <div>
+                    { weekdays.map((day, i) => <Weekday 
+                        key={i} 
+                        id={i} 
+                        day={day}
+                        days={chosenDays}
+                        setDays={setDays}
+                        loading={loading}
                        
-                </List>
-            </Form>
 
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
+                     />)}
+                </div>
+                <span><Cancel
+                 onClick={()=> setInsert("none")}
+                 disabled={loading ? "disabled":""}
+                 >Cancelar</Cancel> 
+
+                <Save 
+                onClick={logHabit}
+                style={loading? {opacity:0.7}:{opacity:1}}
+                disabled={loading ? "disabled":""}
+                >{!loading ? "Salvar": <ThreeDots width="48px"height="18px" color="#FFFFFF" />}
+                </Save></span>
+
+            </ListItemInsert>
+
+            <List>
+
+                {habits.map(h => <Habit weekdays={weekdays}
+                                        loading={loading}
+                                        showInsert={showInsert}
+                                        setInsert ={setInsert} 
+                                        showText={showText} 
+                                        setText={setText} 
+                                        setDays={setDays}
+                                        name={h.name}
+                                        key={h.id}
+                                        days={h.days}/>)}
+                       
+            </List>
+        
+
+            <p showtext={showText} >Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
 
             <BottomBar>
                 <ButtonLeft>
@@ -67,6 +173,8 @@ const HabitsStyle = styled.div`
     font-weight:400;
     margin:10px;
     margin-left:20px;
+    display:${props => props.showtext}
+  
     }
 `
 const Top = styled.div`
@@ -121,22 +229,90 @@ const Title = styled.div`
     }
 `
 
-
-const Form = styled.form`
-    width:100%;
-    display:flex;
-    justify-content:center;
-    margin-bottom:20px;
-        
-`
-
 const List = styled.div`
     width:90%;
+    height:70vh;
     display:flex;
     flex-wrap:wrap;
     align-items:center;
-    list-style:none;   
+    overflow-y:scroll;
+    list-style:none;
+      
 `
+
+const ListItemInsert = styled.form`
+    width:90%;
+    height:180px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background-color:#FFFFFF;
+    border-radius:5px;
+    margin-bottom:15px;
+   
+    input{
+        width:303px;
+        height:45px;
+        margin:10px;
+        border:1px solid #D4D4D4;
+        border-radius:5px;
+        text-indent:10px;
+    }
+
+    input[type='text']{
+        color:#666666;
+        font-family: "Lexend Deca";
+        font-size: 20px;
+        font-weight: 400;
+        text-align: left;
+    }
+
+    input::placeholder{
+        color:#DBDBDB;
+        font-family:"Lexend Deca";
+        font-size:20px;
+        font-weight:400;        
+    }
+    
+    span{
+        width:60%;
+        display:flex;
+        margin-top:20px;
+        margin-left:100px;       
+    }
+
+    display:${props => props.showinsert};
+    
+`
+
+const Cancel = styled.button`
+    background-color:#FFFFFF;
+    border:none;
+    color:#52B6FF;
+    font-size:16px;
+    font-family:"Lexend Deca";
+    font-weight:400;
+    margin-right:20px;
+    
+`
+const Save = styled.button`
+    width:84px;
+    height:35px;
+    background-color:#52B6FF;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#FFFFFF;
+    font-size:16px;
+    font-family:"Lexend Deca";
+    font-weight:400;
+    border:none;
+    border-radius:5px;
+
+
+`
+
+
 const BottomBar = styled.div`
     width:100%;
     height:9vh;

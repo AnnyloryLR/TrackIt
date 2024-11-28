@@ -2,7 +2,7 @@ import styled from "styled-components"
 import {useState} from "react"
 
 
-function Weekday({day, id, days, setDays}){
+function Weekday({day, id, days, setDays, loading}){
 
     const [selected, setSelected] = useState(false)
 
@@ -26,7 +26,11 @@ function Weekday({day, id, days, setDays}){
 
     return(
    
-        <Daybutton onClick={selectDays} selected={selected} >{day}</Daybutton>
+        <Daybutton
+         onClick={selectDays} 
+         selected={selected} 
+         disabled={loading ? "disabled":""}
+        >{day}</Daybutton>
     )
 }
 
