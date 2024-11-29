@@ -146,7 +146,7 @@ const List = styled.div`
     flex-wrap:wrap;
     align-items:center;
     list-style:none;
-    
+       
 `
 const BottomBar = styled.div`
     width:100%;

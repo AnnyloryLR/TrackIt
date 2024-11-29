@@ -101,6 +101,9 @@ const Text = styled.div`
     font-size: 20px;
     font-weight: 400;
     margin:5px;
+    word-wrap:break-word;
+
+
     
 `
 
@@ -109,6 +112,10 @@ const Subtext = styled.div`
         font-family: "Lexend Deca";
         font-size: 13px;
         font-weight: 400;
+        &:nth-child(3){
+            margin-bottom:10px;
+        }
+       
      
 `
 const StyleBox = styled.div`

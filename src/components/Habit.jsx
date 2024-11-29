@@ -38,7 +38,7 @@ export default Habit
 
 const ListItem = styled.li`
     width:100%;
-    height:91px;
+    min-height:15vh;
     display:flex;
     flex-direction:column;
     background-color:#FFFFFF;
@@ -46,18 +46,28 @@ const ListItem = styled.li`
     margin-bottom:10px;
     div{
         margin-left:15px;
+       
     }
+
+    div:nth-child(2){
+        margin-bottom:10px;
+
+    }
+
+
 
 `
 
 const Text = styled.div`
     width:90%;
-    min-height:35px;
+    min-height:5vh;
     color:#666666;
     font-family: "Lexend Deca";
     font-size: 20px;
     font-weight: 400;
-    margin-top:10px;
+    margin:10px;
+    word-wrap:break-word;
+
 
     
 `

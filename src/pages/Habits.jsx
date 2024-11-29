@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { ThreeDots } from "react-loader-spinner"
 import React, {useContext, useEffect, useState} from "react"
 import UserContext from "../contexts/UserContext"
@@ -11,6 +11,8 @@ import Weekday from "../components/Weekday"
 
 
 function Habits(){
+
+    const navigate = useNavigate()
 
     const [habits, setHabits] = useState([]) 
     
@@ -43,6 +45,7 @@ function Habits(){
         .then(res => {console.log(res.data)
                       setInsert("none")
                       setText("none")
+                      setName("")
                       requisition()
                    
         })
@@ -165,13 +168,11 @@ export default Habits
 
 const HabitsStyle = styled.div`
     width:100%;
-    height:100vh;
     background-color:#F2F2F2;
     display:flex;
     flex-wrap:wrap;
     flex-direction:column;
     align-items:center;
-    border:1px solid purple;
     position:fixed;
     top:10vh;
     left:0;
@@ -244,7 +245,7 @@ const List = styled.div`
     flex-wrap:wrap;
     align-items:center;
     overflow-y:scroll;
-    list-style:none;      
+    list-style:none; 
 `
 
 const ListItemInsert = styled.form`
