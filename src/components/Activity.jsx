@@ -1,11 +1,66 @@
 import styled from "styled-components"
 import { CheckBox } from "@mui/icons-material"
+import { useContext, useState } from "react"
+import UserContext from "../contexts/UserContext"
+import axios from "axios"
+
 
 function Activity({text, done, current, sequence }){
 
+ 
+    const {user} = useContext(UserContext);
+    
+    const [markDone, setMarkDone] = useState(false)
+
+    const [finished, setFinished] = useState(done)
+
+    const urlCheck = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/ID_DO_HABITO/check"
+
+    const urlUncheck = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/ID_DO_HABITO/uncheck"
+
+    function finishedActivity(){
+
+        if(finished === false){
+            setMarkDone(true)
+            setFinished(true)
+            switchCheck(urlCheck)                  
+            
+        }
+        else{
+            setMarkDone(false)
+            setFinished(false)
+            switchCheck(urlUncheck)           
+
+        }
+
+
+    }
+
+    function switchCheck(url){
+
+        console.log(url)
+        const body=""
+        
+        const header = {
+            headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        }
+
+        axios.post(url,body,header)
+        .then(res => {console.log(res.data)
+                      setInsert("none")
+                      setText("none")
+                      requisition()
+                   
+        })
+
+        .catch(err => alert(err.response.data.message))
+    }
+
     return(
         <>
-         <ListItem>
+         <ListItem >
             <div>
                 <Text>{text}</Text>
                 <Subtext>
@@ -16,7 +71,7 @@ function Activity({text, done, current, sequence }){
                 </Subtext>
                                          
             </div>
-            <StyleBox><CheckBox sx={{fontSize:88}}  /></StyleBox>
+            <StyleBox markdone={markDone} onClick={finishedActivity}><CheckBox sx={{fontSize:88}}  /></StyleBox>
                     
         </ListItem>           
         </>
@@ -57,6 +112,6 @@ const Subtext = styled.div`
      
 `
 const StyleBox = styled.div`
-        color:#EBEBEB;/*#8FC549; */
+        color:${ prop =>prop.markdone ? "#8FC549" : "#EBEBEB"}
    
 `

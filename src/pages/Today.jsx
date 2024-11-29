@@ -6,7 +6,7 @@ import React, {useContext, useEffect, useState} from "react"
 import UserContext from "../contexts/UserContext"
 import axios from "axios"
 import Activity from "../components/Activity"
-
+import dayjs from "dayjs"
 
 
 function Today(){
@@ -48,7 +48,7 @@ function Today(){
                 <img src={user.image} />
             </Top>
             <Title>
-                 <h1>Segunda, 17/05</h1>
+                 <h1>{dayjs().locale('br').format('dddd')}, {dayjs().format('DD/MM')}</h1>
             </Title>
             
             

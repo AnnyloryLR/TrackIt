@@ -40,9 +40,11 @@ function Habits(){
         }
 
         axios.post(url,habit,header)
-        .then(res => {setHabits(res.data)
+        .then(res => {console.log(res.data)
                       setInsert("none")
                       setText("none")
+                      requisition()
+                   
         })
 
         .catch(err => alert(err.response.data.message))
@@ -143,7 +145,6 @@ function Habits(){
                                         habitdays={h.days}/>)}
                        
             </List>
-        
 
             <p showtext={showText} >Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
 

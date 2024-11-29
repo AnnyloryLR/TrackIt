@@ -1,16 +1,9 @@
 import styled from "styled-components"
-import React, { useContext, useState } from "react"
-import UserContext from "../contexts/UserContext"
 import Weekday from "../components/Weekday"
 
 
-function Habit({ weekdays,habitdays, name, days, setDays, loading}){
-  
-    const {user} = useContext(UserContext)
+function Habit({ weekdays,habitdays, name,setDays, loading}){
 
-    let token = user.token
-
-   
 
 
     return(
