@@ -2,10 +2,9 @@ import styled from "styled-components"
 import React, { useContext, useState } from "react"
 import UserContext from "../contexts/UserContext"
 import Weekday from "../components/Weekday"
-import axios from "axios"
 
 
-function Habit({ weekdays, name, days, setDays, loading}){
+function Habit({ weekdays,habitdays, name, days, setDays, loading}){
   
     const {user} = useContext(UserContext)
 
@@ -16,7 +15,7 @@ function Habit({ weekdays, name, days, setDays, loading}){
 
     return(
         <>  
-            <ListItem name={name} days={days} weekdays={weekdays}>
+            <ListItem name={name} habitdays={habitdays} weekdays={weekdays}>
                 <Text>
                     {name}  
                 </Text>    
@@ -26,7 +25,7 @@ function Habit({ weekdays, name, days, setDays, loading}){
                         key={i} 
                         id={i} 
                         day={day}
-                        days={days}
+                        habitday={habitdays.includes(i)}
                         setDays={setDays}
                         loading={loading}
 

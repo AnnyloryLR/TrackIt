@@ -40,7 +40,7 @@ function Habits(){
         }
 
         axios.post(url,habit,header)
-        .then(res => {console.log(res.data)
+        .then(res => {setHabits(res.data)
                       setInsert("none")
                       setText("none")
         })
@@ -48,7 +48,6 @@ function Habits(){
         .catch(err => alert(err.response.data.message))
 
     }
-
 
 
     function requisition(){
@@ -61,9 +60,14 @@ function Habits(){
          }
 
          axios.get(url, header)
-         .then(res => {setHabits(res.data)
-                     setText("none")
-         })
+         .then(res => {
+            if((res.data).length === 0){
+                setText("enabled")
+            } else{
+                setHabits(res.data)
+                setText("none")
+
+            }})
 
          .catch(err => alert(err.response.data.message))
 
@@ -72,6 +76,9 @@ function Habits(){
      useEffect(() => {
          requisition()
      }, [])
+
+
+   
 
 
 
@@ -125,7 +132,7 @@ function Habits(){
             <List>
 
                 {habits.map(h => <Habit weekdays={weekdays}
-                                        loading={loading}
+                                        loading={"true"}
                                         showInsert={showInsert}
                                         setInsert ={setInsert} 
                                         showText={showText} 
@@ -133,7 +140,7 @@ function Habits(){
                                         setDays={setDays}
                                         name={h.name}
                                         key={h.id}
-                                        days={h.days}/>)}
+                                        habitdays={h.days}/>)}
                        
             </List>
         
@@ -231,13 +238,12 @@ const Title = styled.div`
 
 const List = styled.div`
     width:90%;
-    height:70vh;
+    max-height:70vh;
     display:flex;
     flex-wrap:wrap;
     align-items:center;
     overflow-y:scroll;
-    list-style:none;
-      
+    list-style:none;      
 `
 
 const ListItemInsert = styled.form`
