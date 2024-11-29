@@ -37,7 +37,7 @@ function Today(){
 
 
     return(
-        <HabitsStyle>
+        <DayStyle>
             <Top>
                 <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M23.5841 4.55826L18.0877 4.32437C17.8278 4.32437 16.9702 5.88365 15.5149 9.00222C14.0595 
@@ -50,20 +50,20 @@ function Today(){
             <Title>
                  <h1>{dayjs().locale('br').format('dddd')}, {dayjs().format('DD/MM')}</h1>
             </Title>
+            <ListDay>
+                {todayHabits.map(today => <Activity
+                                                text={today.name}
+                                                id={today.id}
+                                                done={today.done}
+                                                current={today.currentSequence}
+                                                sequence={today.highestSequence}
+                                                key={today.id}
+                                                />) }   
+                    
+            </ListDay>
             
+               
             
-            <List>
-               {todayHabits.map(today => <Activity
-                                            text={today.name}
-                                            done={today.done}
-                                            current={today.currentSequence}
-                                            sequence={today.highestSequence}
-                                            key={today.id}
-                                              />) }   
-                
-            </List>
-          
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
             <BottomBar>
                 <ButtonLeft to={"/habitos"}>
                     <CalendarMonthIcon /> Hábitos
@@ -74,20 +74,17 @@ function Today(){
 
             </BottomBar>
 
-        </HabitsStyle>)
+        </DayStyle>)
 }
 
 export default Today
 
-const HabitsStyle = styled.div`
+const DayStyle = styled.div`
     width:100%;
-    height:100vh;
     background-color:#F2F2F2;
     display:flex;
-    flex-wrap:wrap;
     flex-direction:column;
     align-items:center;
-    border:1px solid purple;
     position:fixed;
     top:10vh;
     left:0;
@@ -98,6 +95,24 @@ const HabitsStyle = styled.div`
     margin:10px;
     margin-left:20px;
     display:none;
+    }
+    width:100%;
+    background-color:#F2F2F2;
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction:column;
+    align-items:center;
+    position:fixed;
+    top:10vh;
+    left:0;
+    p{ color:#666666;
+    font-size:18px;
+    font-family:"Lexend Deca";
+    font-weight:400;
+    margin:10px;
+    margin-left:20px;
+    display:${props => props.showtext}
+  
     }
   
 `
@@ -140,12 +155,14 @@ const Title = styled.div`
 
 
 
-const List = styled.div`
-    width:90%;
+const ListDay = styled.div`
+    width:100%;
+    max-height:70vh;
     display:flex;
     flex-wrap:wrap;
-    align-items:center;
-    list-style:none;
+    justify-content:center;
+    overflow-y:scroll;
+    list-style:none; 
        
 `
 const BottomBar = styled.div`

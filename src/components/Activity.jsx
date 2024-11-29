@@ -5,8 +5,7 @@ import UserContext from "../contexts/UserContext"
 import axios from "axios"
 
 
-function Activity({text, done, current, sequence }){
-
+function Activity({text, id, done, current, sequence }){
  
     const {user} = useContext(UserContext);
     
@@ -14,9 +13,9 @@ function Activity({text, done, current, sequence }){
 
     const [finished, setFinished] = useState(done)
 
-    const urlCheck = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/ID_DO_HABITO/check"
+    const urlCheck = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`
 
-    const urlUncheck = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/ID_DO_HABITO/uncheck"
+    const urlUncheck = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`
 
     function finishedActivity(){
 
@@ -37,10 +36,7 @@ function Activity({text, done, current, sequence }){
     }
 
     function switchCheck(url){
-
-        console.log(url)
-        const body=""
-        
+        const body ={}
         const header = {
             headers:{
                 Authorization:`Bearer ${user.token}`
@@ -55,7 +51,7 @@ function Activity({text, done, current, sequence }){
                    
         })
 
-        .catch(err => alert(err.response.data.message))
+        .catch(err => console.log(err.response.data.message))
     }
 
     return(
@@ -82,28 +78,24 @@ export default Activity
 
 
 const ListItem = styled.li`
-    width:100%;
-    min-height:100px;
+    width:90%;
     display:flex;
     align-items:center;
     background-color:#FFFFFF;
     border-radius:5px;
     margin-bottom:10px;
-    div{
-        min-width:70%;
-        margin-left:7px;
-    }
+
 `
 
 const Text = styled.div`
+    width:190px;
+    min-height:5vh;
     color:#666666;
     font-family: "Lexend Deca";
     font-size: 20px;
     font-weight: 400;
-    margin:5px;
     word-wrap:break-word;
-
-
+    margin:10px;
     
 `
 
@@ -112,8 +104,10 @@ const Subtext = styled.div`
         font-family: "Lexend Deca";
         font-size: 13px;
         font-weight: 400;
+        margin-left:10px;
         &:nth-child(3){
             margin-bottom:10px;
+       
         }
        
      
