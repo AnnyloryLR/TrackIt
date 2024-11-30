@@ -168,6 +168,7 @@ export default Habits
 
 const HabitsStyle = styled.div`
     width:100%;
+    height:85vh;
     background-color:#F2F2F2;
     display:flex;
     flex-wrap:wrap;

@@ -81,6 +81,7 @@ export default Today
 
 const DayStyle = styled.div`
     width:100%;
+    height:85vh;
     background-color:#F2F2F2;
     display:flex;
     flex-direction:column;
