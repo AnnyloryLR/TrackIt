@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
-import { Link, useNavigate } from "react-router"
-import { ThreeDots } from "react-loader-spinner"
+import { Link } from "react-router"
+import { Oval, ThreeDots } from "react-loader-spinner"
 import React, {useContext, useEffect, useState} from "react"
 import UserContext from "../contexts/UserContext"
 import Habit from "../components/Habit"
@@ -12,15 +12,15 @@ import Weekday from "../components/Weekday"
 
 function Habits(){
 
-    const navigate = useNavigate()
-
-    const [habits, setHabits] = useState([]) 
+    const [habits, setHabits] = useState(null) 
     
     const {user} = useContext(UserContext);
 
     const [showInsert, setInsert] = useState("none")
 
     const [showText, setText] = useState("none")
+
+    const [styleHeight, setHeight] = useState("85vh")
 
     const weekdays =["D", "S", "T", "Q", "Q", "S","S"]
 
@@ -31,6 +31,18 @@ function Habits(){
     const habit = {name:habitName, days:chosenDays} 
 
     const [loading, setLoading] = useState(false);
+
+    function newHabit(){
+        if(showInsert === "none"){
+            setInsert("enabled");
+            setHeight("none");
+        }else{
+            setInsert("none");
+            setHeight("85vh");
+
+        }
+
+    }
 
     function logHabit(){
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits"
@@ -83,12 +95,17 @@ function Habits(){
      }, [])
 
 
+    if(habits === null){
+        return( <Loading><Oval color="#126BA5" secondaryColor="#FFFFFF"/></Loading>)
+    }
+
+
    
 
 
 
     return(
-        <HabitsStyle showtext={showText} >
+        <HabitsStyle showtext={showText} styleheight={styleHeight} >
             <Top>
                 <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M23.5841 4.55826L18.0877 4.32437C17.8278 4.32437 16.9702 5.88365 15.5149 9.00222C14.0595 
@@ -99,7 +116,7 @@ function Habits(){
                 <img src={user.image} />
             </Top>
             <Title>
-                 <h1>Meus hábitos</h1> <button onClick={()=> setInsert("enabled")} >+</button>
+                 <h1>Meus hábitos</h1> <button onClick={newHabit} >+</button>
             </Title>
             <ListItemInsert onSubmit={e => e.preventDefault()}  weekdays={weekdays} showinsert={showInsert} >    
                 <input type="text"
@@ -121,7 +138,7 @@ function Habits(){
                      />)}
                 </div>
                 <span><Cancel
-                 onClick={()=> setInsert("none")}
+                 onClick={newHabit}
                  disabled={loading ? "disabled":""}
                  >Cancelar</Cancel> 
 
@@ -166,9 +183,22 @@ function Habits(){
 
 export default Habits
 
+const Loading = styled.div`
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#F2F2F2;
+    position:fixed;
+    top:0;
+    left:0;  
+
+`
+
 const HabitsStyle = styled.div`
     width:100%;
-    height:85vh;
+    height:${prop => prop.styleheight};
     background-color:#F2F2F2;
     display:flex;
     flex-wrap:wrap;

@@ -44,14 +44,10 @@ function Activity({text, id, done, current, sequence }){
         }
 
         axios.post(url,body,header)
-        .then(res => {console.log(res.data)
-                      setInsert("none")
-                      setText("none")
-                      requisition()
-                   
-        })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err))
 
-        .catch(err => console.log(err.response.data.message))
+       
     }
 
     return(
@@ -88,7 +84,7 @@ const ListItem = styled.li`
 `
 
 const Text = styled.div`
-    width:190px;
+    width:225px;
     min-height:5vh;
     color:#666666;
     font-family: "Lexend Deca";

@@ -7,13 +7,14 @@ import UserContext from "../contexts/UserContext"
 import axios from "axios"
 import Activity from "../components/Activity"
 import dayjs from "dayjs"
+import { Oval } from "react-loader-spinner"
 
 
 function Today(){
 
     const {user} = useContext(UserContext); 
 
-    const [todayHabits, setToday] = useState([])
+    const [todayHabits, setToday] = useState(null)
 
     function requisition(){
         const url="https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today"
@@ -34,6 +35,11 @@ function Today(){
     useEffect(() => {
         requisition()
     }, [])
+
+    if(todayHabits === null){
+        return( <Loading><Oval color="#126BA5" secondaryColor="#FFFFFF"/></Loading>)
+    }
+
 
 
     return(
@@ -78,6 +84,19 @@ function Today(){
 }
 
 export default Today
+
+const Loading = styled.div`
+    width:100%;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background-color:#F2F2F2;
+    position:fixed;
+    top:0;
+    left:0;  
+
+`
 
 const DayStyle = styled.div`
     width:100%;
