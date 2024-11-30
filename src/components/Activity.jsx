@@ -75,8 +75,10 @@ export default Activity
 
 const ListItem = styled.li`
     width:90%;
+    height:15vh;
     display:flex;
     align-items:center;
+    justify-content:center;
     background-color:#FFFFFF;
     border-radius:5px;
     margin-bottom:10px;
@@ -109,6 +111,6 @@ const Subtext = styled.div`
      
 `
 const StyleBox = styled.div`
-        color:${ prop =>prop.markdone ? "#8FC549" : "#EBEBEB"}
+        color:${ prop =>prop.markdone ? "#8FC549" : "#EBEBEB"};
    
 `
