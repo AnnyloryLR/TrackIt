@@ -58,6 +58,7 @@ function Habits(){
                       setInsert("none")
                       setText("none")
                       setName("")
+                      setHeight("85vh")
                       requisition()
                    
         })
@@ -76,17 +77,16 @@ function Habits(){
              }
          }
 
-         axios.get(url, header)
-         .then(res => {
-            if((res.data).length === 0){
-                setText("enabled")
-            } else{
-                setHabits(res.data)
-                setText("none")
+         const request = axios.get(url, header)
+         request.then(res =>
+                {setHabits(res.data)               
+                if(res.data.length === 0){
+                     setText("enabled")
+                     setHeight("85vh")
+                }})
+           
 
-            }})
-
-         .catch(err => alert(err.response.data.message))
+         request.catch(err => alert(err.response.data.message))
 
      }
 
@@ -99,13 +99,15 @@ function Habits(){
         return( <Loading><Oval color="#126BA5" secondaryColor="#FFFFFF"/></Loading>)
     }
 
+ 
+
 
    
 
 
 
     return(
-        <HabitsStyle showtext={showText} styleheight={styleHeight} >
+        <HabitsStyle styleheight={styleHeight} >
             <Top>
                 <svg width="100" height="30" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M23.5841 4.55826L18.0877 4.32437C17.8278 4.32437 16.9702 5.88365 15.5149 9.00222C14.0595 
@@ -118,40 +120,40 @@ function Habits(){
             <Title>
                  <h1>Meus hábitos</h1> <button onClick={newHabit} >+</button>
             </Title>
-            <ListItemInsert onSubmit={e => e.preventDefault()}  weekdays={weekdays} showinsert={showInsert} >    
-                <input type="text"
-                       placeholder="nome do hábito" 
-                       value={habitName}
-                       onChange={e => setName(e.target.value)}
-                       disabled={loading ? "disabled":""}
-                 />
-                <div>
-                    { weekdays.map((day, i) => <Weekday 
-                        key={i} 
-                        id={i} 
-                        day={day}
-                        days={chosenDays}
-                        setDays={setDays}
-                        loading={loading}
-                       
+            <List showtext={showText}>
+                <ListItemInsert onSubmit={e => e.preventDefault()}  weekdays={weekdays} showinsert={showInsert} >    
+                    <input type="text"
+                        placeholder="nome do hábito" 
+                        value={habitName}
+                        onChange={e => setName(e.target.value)}
+                        disabled={loading ? "disabled":""}
+                    />
+                    <div>
+                        { weekdays.map((day, i) => <Weekday 
+                            key={i} 
+                            id={i} 
+                            day={day}
+                            days={chosenDays}
+                            setDays={setDays}
+                            loading={loading}
+                        
 
-                     />)}
-                </div>
-                <span><Cancel
-                 onClick={newHabit}
-                 disabled={loading ? "disabled":""}
-                 >Cancelar</Cancel> 
+                        />)}
+                    </div>
+                    <span><Cancel
+                    onClick={newHabit}
+                    disabled={loading ? "disabled":""}
+                    >Cancelar</Cancel> 
 
-                <Save 
-                onClick={logHabit}
-                style={loading? {opacity:0.7}:{opacity:1}}
-                disabled={loading ? "disabled":""}
-                >{!loading ? "Salvar": <ThreeDots width="48px"height="18px" color="#FFFFFF" />}
-                </Save></span>
+                    <Save 
+                    onClick={logHabit}
+                    style={loading? {opacity:0.7}:{opacity:1}}
+                    disabled={loading ? "disabled":""}
+                    >{!loading ? "Salvar": <ThreeDots width="48px"height="18px" color="#FFFFFF" />}
+                    </Save></span>
 
-            </ListItemInsert>
-
-            <List>
+                </ListItemInsert>
+                <p showtext={showText} >Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
 
                 {habits.map(h => <Habit weekdays={weekdays}
                                         loading={"true"}
@@ -165,8 +167,6 @@ function Habits(){
                                         habitdays={h.days}/>)}
                        
             </List>
-
-            <p showtext={showText} >Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a Trackear!</p>
 
             <BottomBar>
                 <ButtonLeft>
@@ -198,7 +198,7 @@ const Loading = styled.div`
 
 const HabitsStyle = styled.div`
     width:100%;
-    height:${prop => prop.styleheight};
+    min-height:${prop => prop.styleheight};
     background-color:#F2F2F2;
     display:flex;
     flex-wrap:wrap;
@@ -207,15 +207,7 @@ const HabitsStyle = styled.div`
     position:fixed;
     top:10vh;
     left:0;
-    p{ color:#666666;
-    font-size:18px;
-    font-family:"Lexend Deca";
-    font-weight:400;
-    margin:10px;
-    margin-left:20px;
-    display:${props => props.showtext}
-  
-    }
+   
 `
 const Top = styled.div`
     width:100%;
@@ -271,16 +263,26 @@ const Title = styled.div`
 
 const List = styled.div`
     width:90%;
-    max-height:70vh;
+    height:80vh;
     display:flex;
-    flex-wrap:wrap;
+    flex-direction:column;
     align-items:center;
     overflow-y:scroll;
-    list-style:none; 
+    list-style:none;
+    p{ 
+        color:#666666;
+        font-size:18px;
+        font-family:"Lexend Deca";
+        font-weight:400;
+        margin:10px;
+        margin-left:20px;
+        display:${props => props.showtext}
+  
+    } 
 `
 
 const ListItemInsert = styled.form`
-    width:90%;
+    width:100%;
     height:180px;
     display:flex;
     flex-direction:column;
@@ -296,6 +298,7 @@ const ListItemInsert = styled.form`
         border:1px solid #D4D4D4;
         border-radius:5px;
         text-indent:10px;
+        margin-top:15px;
     }
 
     input[type='text']{
@@ -332,6 +335,7 @@ const Cancel = styled.button`
     font-family:"Lexend Deca";
     font-weight:400;
     margin-right:20px;
+    margin-bottom:10px;
     
 `
 const Save = styled.button`
@@ -347,10 +351,8 @@ const Save = styled.button`
     font-weight:400;
     border:none;
     border-radius:5px;
-
-
+    margin-bottom:10px;
 `
-
 
 const BottomBar = styled.div`
     width:100%;
