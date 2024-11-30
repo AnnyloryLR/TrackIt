@@ -71,7 +71,6 @@ const SignUpStyle = styled.div`
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    border:1px solid purple;
     position:fixed;
     top:0;
     left:0;

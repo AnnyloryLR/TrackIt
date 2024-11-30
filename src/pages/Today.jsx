@@ -100,23 +100,6 @@ const Loading = styled.div`
 
 const DayStyle = styled.div`
     width:100%;
-    height:85vh;
-    background-color:#F2F2F2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    position:fixed;
-    top:10vh;
-    left:0;
-    p{ color:#666666;
-    font-size:18px;
-    font-family:"Lexend Deca";
-    font-weight:400;
-    margin:10px;
-    margin-left:20px;
-    display:none;
-    }
-    width:100%;
     background-color:#F2F2F2;
     display:flex;
     flex-wrap:wrap;
