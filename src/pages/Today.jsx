@@ -162,8 +162,8 @@ const ListDay = styled.div`
     width:100%;
     height:80vh;
     display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
+    flex-direction:column;
+    align-items:center;
     overflow-y:scroll;
     list-style:none; 
        
