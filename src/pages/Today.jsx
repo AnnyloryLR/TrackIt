@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import React, {useContext, useEffect, useState} from "react"
 import UserContext from "../contexts/UserContext"
 import axios from "axios"
@@ -15,6 +15,8 @@ function Today(){
     const {token, image} = useContext(UserContext);
 
     const [todayHabits, setToday] = useState(null)
+
+    const navigate = useNavigate()
 
     function requisition(){
         const url="https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today"
