@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { CheckBox, CreditCardOffRounded } from "@mui/icons-material"
+import { CheckBox} from "@mui/icons-material"
 import { useContext, useState } from "react"
 import UserContext from "../contexts/UserContext"
 import axios from "axios"
@@ -77,7 +77,7 @@ const ListItem = styled.li`
     justify-content:center;
     background-color:#FFFFFF;
     border-radius:5px;
-    margin-bottom:10px;
+    margin-bottom:15px;
 
 `
 

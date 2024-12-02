@@ -253,7 +253,7 @@ const Title = styled.div`
 `
 
 const List = styled.div`
-    width:90%;
+    width:100%;
     height:72vh;
     display:flex;
     flex-direction:column;
@@ -273,7 +273,7 @@ const List = styled.div`
 `
 
 const ListItemInsert = styled.form`
-    width:100%;
+    width:90%;
     height:180px;
     display:flex;
     flex-direction:column;
