@@ -37,13 +37,13 @@ export default Habit
 
 
 const ListItem = styled.li`
-    width:100%;
+    width:95%;
     min-height:15vh;
     display:flex;
     flex-direction:column;
     background-color:#FFFFFF;
     border-radius:5px;
-    margin-bottom:10px;
+    margin-bottom:15px;
     div{
         margin-left:15px;
        

@@ -16,9 +16,7 @@ function Activity({text, id, done, current, sequence }){
     const urlUncheck = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`
 
     function finishedActivity(){
-        console.log(done)
-
-        
+            
         if(done === true){
 
             const body ={}

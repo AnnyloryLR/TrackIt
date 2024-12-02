@@ -254,7 +254,7 @@ const Title = styled.div`
 
 const List = styled.div`
     width:90%;
-    height:70vh;
+    height:72vh;
     display:flex;
     flex-direction:column;
     align-items:center;
