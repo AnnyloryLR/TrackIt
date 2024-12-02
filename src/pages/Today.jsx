@@ -11,8 +11,12 @@ import { Oval } from "react-loader-spinner"
 
 
 function Today(){
-
+    
     const {token, image} = useContext(UserContext);
+    console.log(token)
+
+
+
 
     const [todayHabits, setToday] = useState(null)
 

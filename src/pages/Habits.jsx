@@ -15,6 +15,7 @@ function Habits(){
     const [habits, setHabits] = useState(null) 
     
     const {token, image} = useContext(UserContext);
+    console.log(token)
 
     const [showInsert, setInsert] = useState("none")
 
