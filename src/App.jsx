@@ -12,12 +12,14 @@ import { useState } from "react"
 
 function App() {
   
-  const [user, setUser] = useState("");
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
-  
+  const [user, setUser] = useState("")
+
+  const image = user.image
 
   return (
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{image, token, user, setToken, setUser}}>
       <BrowserRouter>
         <AppStyle>
           <Routes>

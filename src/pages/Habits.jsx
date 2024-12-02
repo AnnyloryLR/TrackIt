@@ -14,7 +14,7 @@ function Habits(){
 
     const [habits, setHabits] = useState(null) 
     
-    const {user} = useContext(UserContext);
+    const {token, user} = useContext(UserContext);
 
     const [showInsert, setInsert] = useState("none")
 
@@ -49,13 +49,12 @@ function Habits(){
         
         const header = {
             headers:{
-                Authorization:`Bearer ${user.token}`
+                Authorization:`Bearer ${token}`
             }
         }
 
         axios.post(url,habit,header)
-        .then(res => {console.log(res.data)
-                      setInsert("none")
+        .then(res => {setInsert("none")
                       setText("none")
                       setName("")
                       setHeight("85vh")
@@ -73,7 +72,7 @@ function Habits(){
 
          const header = {
              headers:{
-                 Authorization:`Bearer ${user.token}`
+                 Authorization:`Bearer ${token}`
              }
          }
 
@@ -100,12 +99,6 @@ function Habits(){
     }
 
  
-
-
-   
-
-
-
     return(
         <HabitsStyle styleheight={styleHeight} >
             <Top>
@@ -135,10 +128,8 @@ function Habits(){
                             day={day}
                             days={chosenDays}
                             setDays={setDays}
-                            loading={loading}
-                        
+                            loading={loading} />)}
 
-                        />)}
                     </div>
                     <span><Cancel
                     onClick={newHabit}
@@ -263,7 +254,7 @@ const Title = styled.div`
 
 const List = styled.div`
     width:90%;
-    height:80vh;
+    height:70vh;
     display:flex;
     flex-direction:column;
     align-items:center;

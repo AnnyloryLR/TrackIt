@@ -9,7 +9,8 @@ import { ThreeDots } from "react-loader-spinner"
 
 function Login(){
 
-    const {setUser} = useContext(UserContext);
+    const {setToken} = useContext(UserContext);
+    const {setUser} = useContext(UserContext)
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -26,6 +27,7 @@ function Login(){
         axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", accessInformation)
         .then(res => {
             setUser(res.data)
+            setToken(res.data.token)
             localStorage.setItem("token", res.data.token)
             setLoading(false)
             navigate("/hoje")

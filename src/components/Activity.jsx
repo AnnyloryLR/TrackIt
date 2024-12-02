@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { CheckBox } from "@mui/icons-material"
+import { CheckBox, CreditCardOffRounded } from "@mui/icons-material"
 import { useContext, useState } from "react"
 import UserContext from "../contexts/UserContext"
 import axios from "axios"
@@ -7,48 +7,46 @@ import axios from "axios"
 
 function Activity({text, id, done, current, sequence }){
  
-    const {user} = useContext(UserContext);
+    const {token} = useContext(UserContext);
     
-    const [markDone, setMarkDone] = useState(false)
-
-    const [finished, setFinished] = useState(done)
+    const [markDone, setMarkDone] = useState(done)
 
     const urlCheck = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`
 
     const urlUncheck = `https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`
 
     function finishedActivity(){
+        console.log(done)
 
-        if(finished === false){
-            setMarkDone(true)
-            setFinished(true)
-            switchCheck(urlCheck)                  
-            
-        }
-        else{
-            setMarkDone(false)
-            setFinished(false)
-            switchCheck(urlUncheck)           
+        
+        if(done === true){
 
-        }
-
-
-    }
-
-    function switchCheck(url){
-        const body ={}
-        const header = {
-            headers:{
-                Authorization:`Bearer ${user.token}`
+            const body ={}
+            const header = {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
             }
+    
+            axios.post(urlUncheck,body,header)
+            .then(res => setMarkDone(false))
+            .catch(err => console.log("erro uncheck",err.response.data))
+           
+        } else{
+            const body ={}
+            const header = {
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            }
+            axios.post(urlCheck,body,header)
+            .then(res => setMarkDone(true))
+            .catch(err => console.log("erro check",err.response.data))
+
         }
-
-        axios.post(url,body,header)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
-
-       
+          
     }
+          
 
     return(
         <>
@@ -63,7 +61,7 @@ function Activity({text, id, done, current, sequence }){
                 </Subtext>
                                          
             </div>
-            <StyleBox markdone={markDone} onClick={finishedActivity}><CheckBox sx={{fontSize:88}}  /></StyleBox>
+            <StyleBox done={done} markdone={markDone} onClick={finishedActivity}><CheckBox sx={{fontSize:88}}  /></StyleBox>
                     
         </ListItem>           
         </>
@@ -111,6 +109,6 @@ const Subtext = styled.div`
      
 `
 const StyleBox = styled.div`
-        color:${ prop =>prop.markdone ? "#8FC549" : "#EBEBEB"};
+        color:${ prop => prop.markdone ? "#8FC549" : "#EBEBEB"};
    
 `
