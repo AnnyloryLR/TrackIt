@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { Oval, ThreeDots } from "react-loader-spinner"
 import React, {useContext, useEffect, useState} from "react"
 import UserContext from "../contexts/UserContext"
@@ -31,6 +31,8 @@ function Habits(){
     const habit = {name:habitName, days:chosenDays} 
 
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate()
 
     function newHabit(){
         if(showInsert === "none"){
@@ -88,6 +90,14 @@ function Habits(){
          request.catch(err => alert(err.response.data.message))
 
      }
+
+     useEffect(() => {
+        if(!token){
+            navigate("/")
+
+        }
+     })
+
 
      useEffect(() => {
          requisition()

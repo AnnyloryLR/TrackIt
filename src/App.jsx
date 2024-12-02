@@ -11,6 +11,8 @@ import { useState } from "react"
 
 
 function App() {
+
+  console.log(localStorage.getItem('token'))
   
   const [token, setToken] = useState(localStorage.getItem('token'));
 
