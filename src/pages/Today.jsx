@@ -33,6 +33,13 @@ function Today(){
     }
 
     useEffect(() => {
+        if(!token){
+            navigate("/")
+
+        }
+     })
+
+    useEffect(() => {
         requisition()
     }, [])
 
